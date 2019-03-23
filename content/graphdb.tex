@@ -5,6 +5,38 @@
 \subsection{Motivation}
 why its imporant, history, context
 
+%%%
+Einleitung.
+
+But Graph Database research has been initiated already in the early 90s. During this time, a number of suggestions came up, trying to  propose a semantic network to store data about the database. That was, because contemporary systems were failing to take into account the semantics of a database.
+Among those was  ...An implicit structure of graphs for the data itself was presented in the Functional Data Model [166], whose goal was to provide a -conceptually natural- database interface. A different approach proposed the Logical Data Model (LDM) [126], where an explicit graph dbmodel intended to generalize the relational, hierarchical and network models. Later [125] proposed a graph db-model for representing complex structures of knowledge called G-Base. \citep{Angles2018AnIT}
+During this time, most of the underlying theory of Graph Databases was created.
+
+It was most likely because of insufficient hardware support for big graphs that this research declined, only to be picked up again now, which is focused on actual practical systems because we have the hardware now but also on theoretical analysis of graph query languages. \citep{Angles2018AnIT}
+
+
+%%
+Storing, retrieving, and
+manipulating such complex data becomes onerous when using traditional RDBMS approaches. Schema based data models by
+their very definition put in place limits on how information will be stored. There is an involved manual process to redesign
+the schema in order to adapt to new data. Where the RDBMS is optimized for aggregated data, graph databases such as
+Neo4j are optimized for highly connected data.
+
+GRAPHS ARE EVERYWHERE
+Graphs are extremely useful in understanding a wide diversity of datasets in fields such as science, government, and business. The real world—unlike the forms-based model behind the relational database—is rich and interrelated: uniform and rule-bound in parts, exceptional and irregular in others. Once we understand graphs, we begin to see them in all sorts of places. Gartner, for example, identifies five graphs in the world of business—social, intent, consumption, interest, and mobile—and says that the ability to leverage these graphs provides a “sustainable competitive advantage.”
+- Buch Graph Databases 
+
+Graph databases really shine when working in areas where information about data interconnectivity or topology is important.
+In such applications the relations between data and the data itself are usually at the same level [1]. Many companies have
+developed in-house implementations in order to cope with the need of graph database systems. Examples would be
+Facebook’s Open Graph, Google’s Knowledge Graph, Twitter’s FlockDB, any many more. The following are a few
+examples of systems that would benefit greatly from graph database approach. RDBMS can be used for such systems but in a
+much more limiting and expensive way (expensive meaning processing power caused by recursive JOINs for friend of a
+friend type problems). 
+- Social Graph
+- Recommender Systems
+- Bioinformatik
+
 \section{Graph Database Theory}
 \subsection{Description of data model and functionality}
 \subsection{fields of application}
@@ -23,4 +55,3 @@ why its imporant, history, context
 \subsection{conclusion}
 reflect on advantages disadvantages with implementation references
 
-Lorem ipsum \parencite[cf.][42]{musterfrau2019}.
