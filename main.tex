@@ -16,11 +16,7 @@
 
 % Citation packages and options
 \usepackage{csquotes}
-\usepackage[
-  backend=biber,
-  style=apa
-]{biblatex}
-\addbibresource{bibliography.bib}
+\usepackage[]{natbib}
 
 % ===== INDIVIDUAL AUTHORS PER CHAPTER =====
 % Source: https://tex.stackexchange.com/a/156865
@@ -57,6 +53,7 @@
 \input{content/graphdb}
 
 
-\printbibliography
+\bibliographystyle{plain}
+\bibliography{bibliography}
 
 \end{document}
