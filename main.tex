@@ -6,6 +6,7 @@
 ]{scrbook}
 
 \usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
 \usepackage[english]{babel}
 
 \usepackage[hidelinks]{hyperref}
@@ -17,6 +18,10 @@
 % Citation packages and options
 \usepackage{csquotes}
 \usepackage[]{natbib}
+
+% Listings and drawings
+\usepackage{minted}
+\usepackage{tikz}
 
 % ===== INDIVIDUAL AUTHORS PER CHAPTER =====
 % Source: https://tex.stackexchange.com/a/156865
@@ -50,7 +55,7 @@
 \maketitle
 \tableofcontents
 
-\input{content/graphdb}
+\input{content/05_graphdb}
 
 
 \bibliographystyle{plain}
