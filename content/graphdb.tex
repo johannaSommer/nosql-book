@@ -23,7 +23,7 @@ A deeper description of the theory behind graph databases will be given in subse
 \subsection{Description of data model and functionality}
 \subsection{fields of application}
 \subsection{CAP Theorem}
-\subsection{GraphDB vs. RDBMS}
+\subsection{Comparison: Graph Databases and Relational Databases}
 As the comparison between Graph Databases and Relational Databases is a known field, a lot of literature exists on this topic already. Throughout the comparisons, the two methods are always assessed under the same aspects: performance, flexibility, security and maturity. \\
 For those comparison points it makes sense to focus on specific implementations of the technologies, hence in this section Neo4j will be chosen as a concrete precedent for Graph Databases, whereas MySQL will be the example implementation for Relational Databases.
 
@@ -36,13 +36,13 @@ Contrary to that, in the data queries MySQL turned out to be more efficient. Thi
 The researchers also took into account a special case for the experiments, trying the data queries with payload that is closer to actual real world data - text with spaces inbetween the words. Surprisingly, at a large enough scale Nao4j outperformed MySQL by a large amount for those queries.
 
 \subsubsection{flexibility}
-under the flexibility aspect, both database technologies are compared under the aspect of being taken out of the environments for which they were created \citep{Vicknair2010}. For rdbms the uncommon environment is adhoc data schemes that change with time \cite{GarimaAnalysis}. while for graphdb a less typical dataset is one without connections between the nodes
-MySQL is optimiged for a large-scale multi-user environment, thats why trying to use it for smaller applications is difficult most of the time, since you have to account for a lot of functionality and also implement it without neccessarily using it. 
-Neo4j is typically targeted towards more lightweight application, but manages to scale really well  and has a scalable architecture for speed. \cite{neo4jweb} It has an easily mutable schema.
+The flexibility aspect compares both database technologies in their behaviour when taken out of the environment that they were created for \citep{Vicknair2010}. \\
+For Relational Databases an uncommon environment would for example be ad-hoc data schemes that change with time, whereas for Graph Databases a less typical dataset would be one without many connections between the individual nodes  \cite{GarimaAnalysis}. 
+MySQL is optimized for a large-scale multi-user environment, hence trying to use it for smaller applications comes with a large overhead of functionality that has to be implemented with it but that may not even be needed for this specific application. 
+Neo4j is typically targeted towards more lightweight applications, but manages to scale really well, having a scalable architecture that also accounts for speed \cite{neo4jweb}. Its easily mutable schema makes it more flexible with data types that are rather untypical for Graph Databases.
 
-\subsubsection{security}
-Neo4j does not have built in mechanisms for managing security restrictions and multiple users \cite{GarimaAnalysis}.
-mySQL natively has multi user support and suppports Access Control Lists
+\subsubsection{Security}
+Neo4j does not have built in mechanisms for managing security restrictions and multiple users \cite{GarimaAnalysis}. MySQL on the other hand natively supports multiple users as well as access control lists. \citep{mysqlsecurity}
 
 \subsubsection{Maturity}
 it makes sense to talk about the database implementations in general now. 
