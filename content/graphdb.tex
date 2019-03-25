@@ -24,6 +24,17 @@ A deeper description of the theory behind graph databases will be given in subse
 \subsection{fields of application}
 \subsection{CAP Theorem}
 \subsection{GraphDB vs. RDBMS}
+einleitung, there is lots of literature on it and the main comparison points seem to be:
+\subsubsection{support}
+\subsubsection{performance}
+in xx VIcknais et al. did a detailed performance survey. For that, mySQL version 5.1.42 and neo4j 1.0-b11hoch2 was compared. \citep{Vicknair2010}
+The queries simulate the types that are used in provenance systems. So for one dataset or node, you traverse the graph to find out their herkunft. Similarily if a data object/node is marked as incorrect, this information needs to be propagated to all is descendants/child nodes.
+The queries then were partitioned int structureal queries referencing the graph but not the paylos, an data queries using the payload data. integer payload data
+For the traversal queries, S0, S4, and S128, Neo4j was clearly faster, sometimes by a factor of 10. Though relational databases are not designed to do traversals. Neo4j also has a built in framework for traversals whereas mysql used a standard breadth first search.
+in the data queries mysql turned out to be more efficient, partly because neo4j uses Lucene for querying, which treats all payload as text, eventhough this payload was integer. Also with a text payload mysql outperformed neo4j. Though the  researchers also took into account data closer to the real world that has spaces. Surprisinliy, at a large enough scale, neo4j outperformed mysql by a large amount.
+
+\subsubsection{flexibility}
+\subsubsection{security}
 
 \section{Implementation with Neo4j}
 \subsection{Use Case from the SQL world}
