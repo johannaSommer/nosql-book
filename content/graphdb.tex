@@ -23,7 +23,31 @@ A deeper description of the theory behind graph databases will be given in subse
 \subsection{Description of data model and functionality}
 \subsection{fields of application}
 \subsection{CAP Theorem}
-\subsection{GraphDB vs. RDBMS}
+\subsection{Comparison: Graph Databases and Relational Databases}
+As the comparison between Graph Databases and Relational Databases is a known field, a lot of literature exists on this topic already. Throughout the comparisons, the two methods are always assessed under the same aspects: performance, flexibility, security and maturity. \\
+For those comparison points it makes sense to focus on specific implementations of the technologies, hence in this section Neo4j will be chosen as a concrete precedent for Graph Databases, whereas MySQL will be the example implementation for Relational Databases.
+
+\subsubsection{Performance}
+Detailed surveys on performance of both technologies already exist in literature, for example from Vicknais et al. \cite{Vicknair2010}. In this specific instance, MySQL version 5.1.42 and Neo4j-b11 were compared.
+The queries chosen for the experiments were similar to types that are used in real world provenance systems. Typically in this scenario, for one dataset/node one traverses the graph to find its origin. Another use case in this context is, if a data object or node is deemed incorrect, this information needs to be propagated to all its descendants/child nodes \cite{Vicknair2010}.\\
+Further on, the queries were partitioned into structural queries referencing the graph but not the payload itsself, and data queries using the actual payload data. It is important to note that the payload data in this case was integer payload data, as different types are handled seperately depending on framework.\\
+In the traversal queries, Neo4j clearly outperformed MySQL, sometimes even being faster by the factor of 10. Though that was expected, as Relational Databases are not designed for traversals. MySQL for this part of experiment falls back to a standard Breath First Search, which is not optimal for this scenario. Neo4j on the other hand has a built in framework for traversals, making it superior in terms of performance for the traversal queries \cite{Vicknair2010}. \\
+Contrary to that, in the data queries MySQL turned out to be more efficient. This result was partly due to the fact that Neo4j uses Lucene for querying, which treats all payload as text, eventhough in this scenario the payload is of type integer. But also when the payload changes to text, MySQL had better performance in the experiments \cite{Vicknair2010}. \\
+The researchers also took into account a special case for the experiments, trying the data queries with payload that is closer to actual real world data - text with spaces inbetween the words. Surprisingly, at a large enough scale Nao4j outperformed MySQL by a large amount for those queries.
+
+\subsubsection{Flexibility}
+The flexibility aspect compares both database technologies in their behaviour when taken out of the environment that they were created for \citep{Vicknair2010}. \\
+For Relational Databases an uncommon environment would for example be ad-hoc data schemes that change with time, whereas for Graph Databases a less typical dataset would be one without many connections between the individual nodes  \cite{GarimaAnalysis}. 
+MySQL is optimized for a large-scale multi-user environment, hence trying to use it for smaller applications comes with a large overhead of functionality that has to be implemented with it but that may not even be needed for this specific application. 
+Neo4j is typically targeted towards more lightweight applications, but manages to scale really well, having a scalable architecture that also accounts for speed \cite{neo4jweb}. Its easily mutable schema makes it more flexible with data types that are rather untypical for Graph Databases.
+
+\subsubsection{Security}
+Neo4j does not have built in mechanisms for managing security restrictions and multiple users \cite{GarimaAnalysis}. MySQL on the other hand natively supports multiple users as well as access control lists. \citep{mysqlsecurity}
+
+\subsubsection{Maturity}
+For the comparison under the aspect of maturity it makes sense to talk about database implementations in general. Maturity refers both to how old a particular system is and to how thoroughly tested it is \cite{Vicknair2010}.
+Since all Relational databases - inclusing MySQL - use the same query language SQL, support is equal over all implementations and support for one implementation is applicable to all others \cite{GarimaAnalysis}. 
+Neo4js version 1.1 was released in February 2010. While Neo4j is a for-profit framework and has decent support from its parenty company, this does not apply to all graph database implementations \cite{Vicknair2010}. Furthermore, the query languages differ from implementation to implementation, separating them in that aspect and not sharing support??.
 
 \section{Implementation with Neo4j}
 \subsection{Use Case from the SQL world}
