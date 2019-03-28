@@ -29,17 +29,34 @@ A deeper description of the theory behind graph databases will be given in subse
 
 \section{Implementation with Neo4j}
 In this section the general setup of Neo4j should be lined out and a sample project be described utilizing available Python-Libraries to implement a sample use case.
-\subsection{Use Case from the SQL world}
-\subsection{Installation}
-\subsection{Modelling}
-The database model has been implemented using neomodel, which is a community driven project to provide an Object-Graph-Mapper (OGM) published under MIT-License.
-The database model in \ref{lst:graphdb:neomodel} has been built following the neomodel documentation \cite{neomodel:rtd} describing a simple database structure.
-This database maps the relations in a social network.
-There may be an arbitrary number of Persons who may be friends with other persons.
-Additionally they can state interests and may be a member of a group.
-Forthermore they can state where they live (region and country).
 
-\begin{figure}[h]
+\subsection{Use Case from the SQL world}
+
+\subsection{Installation}
+
+\subsection{Modelling}
+\subsubsection{General Conzept of a Database Model}
+There are a couple of guides available describing how to build a database model for Neo4j. Since the database itself is schema-less multiple schmeas can be built and implemented at the same time.
+Nevertheless an application needs a model of the data.
+Neo4j states in \cite{neo4j:rel_to_graph} that it is possible to transfer almost all existing relational models into a graph model.
+The general approach has been described in \cite{dzone:rel_to_graph}.
+To convert a relational model into a graph tables should be considered as labels.
+Foreign keys should be removed and be converted to relations.
+JOIN-Tables become relations with additional properties \cite{neo4j:graph_vs_rdbms}.
+The remaining rows will be converted into nodes connected by edges based on the formerly converted relations.
+
+\subsubsection{Implementation of a database model}
+While it is possible to manage the database utilizing the CRUD-functionality from Cypher (see \ref{sec:graphdb:cypher}) this is not really comfortable in an application.
+Developers familiar with Object-Relational-Mappers (ORM) such as Hibernate for Java or SQLAlchemy for Python would prefer to define the different nodes and relations in common objects.
+For Python there is such an Object-Graph-Mapper (OGM) -- neomodel, which is a community driven project to integrate Neo4j into a Python application, published under MIT-License.
+
+The database model in \ref{lst:graphdb:neomodel} has been built following the neomodel documentation \cite{neomodel:rtd} describing a relatively simple database structure.
+This database maps the relations in a social network.
+As it can be seen in \ref{fig:graphdb:graphmodel} there may be an arbitrary number of Persons (orange) who may be friends with other persons.
+Additionally they can share interests (green) and may be a member of a group (purple).
+Forthermore they can state from which country (yellow) they are from.
+
+\begin{figure}[ht]
     \centering
     \begin{tikzpicture}
         \node[draw, circle, fill=orange, minimum height=1.5cm, minimum width=1.5cm] (alice) {Alice};
@@ -74,17 +91,8 @@ Forthermore they can state where they live (region and country).
     \label{fig:graphdb:graphmodel}
 \end{figure}
 
-
 \begin{listing}[ht]
 \begin{minted}{python}
-from datetime import datetime
-
-import pytz
-from neomodel import (BooleanProperty, DateTimeProperty, IntegerProperty,
-                      Relationship, RelationshipFrom, RelationshipTo,
-                      StringProperty, StructuredNode, StructuredRel,
-                      UniqueIdProperty, config)
-
 class Partnership(StructuredRel):
     relationshipType = StringProperty()
     since = DateTimeProperty(
@@ -92,9 +100,6 @@ class Partnership(StructuredRel):
     )
 
 class Country(StructuredNode):
-    name = StringProperty(unique_index=True, required=True)
-
-class Region(StructuredNode):
     name = StringProperty(unique_index=True, required=True)
 
 class Interest(StructuredNode):
@@ -111,7 +116,6 @@ class Person(StructuredNode):
 
     # traverse outgoing relations
     country = RelationshipTo(Country, 'IS_FROM')
-    region = RelationshipTo(Region, 'IS_FROM')
     interests = RelationshipTo(Interest, 'IS_INTERESTED_IN')
     groups = RelationshipTo('Group', 'IS_MEMBER')
     friends = Relationship('Person', 'FRIENDS_WITH', model=Partnership)
@@ -121,7 +125,36 @@ class Person(StructuredNode):
 \end{listing}
 
 \subsection{Usage and query language}
+\label{sec:graphdb:cypher}
+Neo4j provides its own query language Cypher. It is developed with an open source specification called openCypher \cite{openCypher}.
+Thus it should be possible to use the same query language for graph processing within database products such as SAP HANA, Redis or Neo4j.
+It's syntax is oriented on SQL statements though there are quite some differences to better match into a graph model.
+
+To match all nodes without regard to the Label one would simply call: \mint{SQL}|MATCH (n) RETURN n|
+This would return all nodes and all relations between them.
+Nodes are always selected in the \texttt{MATCH} statements and are enclosed with parentheses.
+It is possible to declare the label of a node by calling \mint{SQL}|MATCH (p:Person) RETURN p|
+This would reduce the output to all persons and the relations between them.
+
+Of course it is possible to query for relations as well.
+Cypher allows to specify directed and undirected relations.
+The following query gets all Persons who have one or more friends: \mint{SQL}|MATCH (a:Person) -[:FRIENDS_WITH]- (b:Person) RETURN a, b|
+The relationship type in the brackets may be ommited if there is only one relationship type between the nodes.
+
+Furthermore one can query for certain attributes on a node.
+\mint{SQL}|MATCH (p:Person {name: 'Isaac Newton'})-[r]-(c) RETURN p, r, c|
+The query above selects a specific Person-node with the attribute \texttt{name} equals \glqq Isaac Newton\grqq and matching and returning all nodes connected to this person.
+Cypher also supports a \texttt{WHERE} statement. The following query has the same effect: \mint{SQL}|MATCH (p:Person)-[r]-(c) WHERE p.name = 'Isaac Newton' RETURN p, r, c|
+
+
 \subsection{short conclusion, summary}
+Neo4j is simple to use and easy to get started with.
+Getting data in and out of the database isn't that difficult to get started with.
+Especially Cypher makes this easy.
+There are two major downsides with Neo4j. The first one is the memory footprint.
+A newly set up instance already consumes more than 600MB of RAM -- compared to a PostgreSQL instance storing a couple hundrets of MB data and still consuming less than half of that.
+Secondly many features are not available in the community edition.
+Many features -- especially regarding maintenance and clustering are preserved for the enterprise edition.
 
 \section{Reflection}
 \subsection{alternative popular graphdbs}
