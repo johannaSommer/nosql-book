@@ -38,11 +38,11 @@ In this section the general setup of Neo4j should be lined out and a sample proj
 \subsubsection{General Conzept of a Database Model}
 There are a couple of guides available describing how to build a database model for Neo4j. Since the database itself is schema-less multiple schmeas can be built and implemented at the same time.
 Nevertheless an application needs a model of the data.
-Neo4j states in \cite{neo4j:rel_to_graph} that it is possible to transfer almost all existing relational models into a graph model.
-The general approach has been described in \cite{dzone:rel_to_graph}.
+Neo4j states in \autocite{neo4j:rel_to_graph} that it is possible to transfer almost all existing relational models into a graph model.
+The general approach has been described in \autocite{dzone:rel_to_graph}.
 To convert a relational model into a graph tables should be considered as labels.
 Foreign keys should be removed and be converted to relations.
-JOIN-Tables become relations with additional properties \cite{neo4j:graph_vs_rdbms}.
+JOIN-Tables become relations with additional properties \autocite{neo4j:graph_vs_rdbms}.
 The remaining rows will be converted into nodes connected by edges based on the formerly converted relations.
 
 \subsubsection{Implementation of a database model}
@@ -50,7 +50,7 @@ While it is possible to manage the database utilizing the CRUD-functionality fro
 Developers familiar with Object-Relational-Mappers (ORM) such as Hibernate for Java or SQLAlchemy for Python would prefer to define the different nodes and relations in common objects.
 For Python there is such an Object-Graph-Mapper (OGM) -- neomodel, which is a community driven project to integrate Neo4j into a Python application, published under MIT-License.
 
-The database model in \ref{lst:graphdb:neomodel} has been built following the neomodel documentation \cite{neomodel:rtd} describing a relatively simple database structure.
+The database model in \ref{lst:graphdb:neomodel} has been built following the neomodel documentation \autocite{neomodel:rtd} describing a relatively simple database structure.
 This database maps the relations in a social network.
 As it can be seen in \ref{fig:graphdb:graphmodel} there may be an arbitrary number of Persons (orange) who may be friends with other persons.
 Additionally they can share interests (green) and may be a member of a group (purple).
@@ -126,7 +126,7 @@ class Person(StructuredNode):
 
 \subsection{Usage and query language}
 \label{sec:graphdb:cypher}
-Neo4j provides its own query language Cypher. It is developed with an open source specification called openCypher \cite{openCypher}.
+Neo4j provides its own query language Cypher. It is developed with an open source specification called openCypher \autocite{openCypher}.
 Thus it should be possible to use the same query language for graph processing within database products such as SAP HANA, Redis or Neo4j.
 It's syntax is oriented on SQL statements though there are quite some differences to better match into a graph model.
 
