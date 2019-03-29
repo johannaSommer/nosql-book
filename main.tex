@@ -14,9 +14,19 @@
 \usepackage{lipsum}
 \usepackage{tabularx}
 
+% Listings and drawings (needs to be loaded before csquotes)
+\usepackage{minted}
+\usepackage{tikz}
+
 % Citation packages and options
 \usepackage{csquotes}
-\usepackage[]{natbib}
+\usepackage[
+  backend=biber,
+  style=apa
+]{biblatex}
+\addbibresource{bibliography.bib}
+\DeclareLanguageMapping{english}{english-apa}
+
 
 % ===== INDIVIDUAL AUTHORS PER CHAPTER =====
 % Source: https://tex.stackexchange.com/a/156865
@@ -50,10 +60,9 @@
 \maketitle
 \tableofcontents
 
-\input{content/graphdb}
+\input{content/05_graphdb}
 
 
-\bibliographystyle{plain}
-\bibliography{bibliography}
+\printbibliography
 
 \end{document}
