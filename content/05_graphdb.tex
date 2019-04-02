@@ -32,7 +32,7 @@ A graph database can be implemented with different concepts (non-native or nativ
 Before the property graph model can be explained, a short recap of graphs is needed. There is no need for general graph theory to understand graph databases \autocite{graphdb2015}.\\
 
 \subsubsection{Graph Basics}
-A graph is a theoretical structure which represents a set of entities and their relationships. Whereby entities are represented by nodes (vertices) and relationships by links between nodes (edges) \autocite{maheshlal2015, graphdb2015}. One-way relationships, like being the parent of someone, are represented as directed edges. On the contrary, two-way relationships, like being married to someone can be represented as two directed edges between both related nodes. See figure \ref{fig:graphdb:graph_example} for an example. 
+A graph is a theoretical structure which represents a set of entities and their relationships. Whereby entities are represented by nodes (vertices) and relationships by links between nodes (edges) \autocite{maheshlal2015, graphdb2015}. One-way relationships, like being the parent of someone, are represented as directed edges. On the contrary, two-way relationships, like being married to someone can be represented as two directed edges between both related nodes. See figure \ref{fig:graphdb:graph_example} for an example.
 
 \begin{figure}[ht]
     \centering
@@ -42,7 +42,7 @@ A graph is a theoretical structure which represents a set of entities and their 
 \end{figure}
 
 \subsubsection{The property graph model}
-The (labeled) property graph model is based on the theoretical graph from above \autocite{maheshlal2015}. It increases the overall information that a normal graph could store. Two such extensions, as the model name illustrates, are additional labels for each node and properties for nodes and edges. Figure \ref{fig:graphdb:property_graph_example} shows a labeled property graph. 
+The (labeled) property graph model is based on the theoretical graph from above \autocite{maheshlal2015}. It increases the overall information that a normal graph could store. Two such extensions, as the model name illustrates, are additional labels for each node and properties for nodes and edges. Figure \ref{fig:graphdb:property_graph_example} shows a labeled property graph.
 
 \begin{figure}[ht]
     \centering
@@ -70,14 +70,14 @@ One of the main tasks of a graph database system is to iterate through relations
 Non-native graph storage transforms the data from the graph model (e.g. property graph) into relational or other non-graph NoSQL database models (document-oriented, etc.). When accessing the data, the responsible system must rebuild (infer) the relationships at runtime. This is mostly done by a query engine which is responsible for executing incoming queries and thus fetching or changing the data (CRUD methods) \autocite{maheshlal2015} . In the case of a relation database management system (RDBMS), the query engine would first make the relationships explicit by inferring the relationships through utilizing foreign keys and join-statements before returning or processing the data. This preprocessing results in more costly operations and inefficient traversing of relationships \autocite{maheshlal2015} . But as an advantage, the usage of well know, well-engineered and well documented databases like MySQL is possible \autocite{graphdb2015}.
 
 \scalebox{1}{\textbf{Native graph storage}} \linebreak
-The key aspect of a native graph storage is that it does not rely on actual indexes. The relationships between nodes within the graph are “natural adjacency”\autocite{graphdb2015}  indices. Thus, the nodes are stored in such a way that they are physically linked to each other on the disc. This is called “index-free adjacency”\autocite{graphdb2015}. In practice, this is done by pointers. Accordingly, searching for a specific information in a native graph storage is done by traversing through pointers. This causes queries on native storage to be highly efficient compared to non-native storage which uses join-statements and index lookups \autocite{graphdb2015} . 
+The key aspect of a native graph storage is that it does not rely on actual indexes. The relationships between nodes within the graph are “natural adjacency”\autocite{graphdb2015}  indices. Thus, the nodes are stored in such a way that they are physically linked to each other on the disc. This is called “index-free adjacency”\autocite{graphdb2015}. In practice, this is done by pointers. Accordingly, searching for a specific information in a native graph storage is done by traversing through pointers. This causes queries on native storage to be highly efficient compared to non-native storage which uses join-statements and index lookups \autocite{graphdb2015} .
 
 \subsection{Advantages of Graph Databases}
-Graph databases offer substantial advantages when working with connected data \autocite{maheshlal2015}. Its performance, flexibility and agility are the key differentiates from other databases \autocite{graphdb2015}. The following will take a closer look at these three advantages. More details and references to actual research data on these advantages can be found in the Chapter Comparison: Graph Databases and Relational Databases (\ref{section:comparison}). 
+Graph databases offer substantial advantages when working with connected data \autocite{maheshlal2015}. Its performance, flexibility and agility are the key differentiates from other databases \autocite{graphdb2015}. The following will take a closer look at these three advantages. More details and references to actual research data on these advantages can be found in the Chapter Comparison: Graph Databases and Relational Databases (\ref{section:comparison}).
 
 \subsubsection{Performance}
 A graph database has much higher query processing performance compared to relational and other NoSQL databases. This advantage becomes more and more obvious as the amount of stored data grows. In the relational world more data would mean a higher join-intensify and thus worse performance. Whereas in the graph database world the performance remains to be almost constant even for an exponential increase. This is the cases because queries are being restricted to parts of the graph (e.g. a subgraph) which contains the information of interest.  Therefore, querying only needs time proportional to size of the subgraph and not to the size of the whole graph \autocite{maheshlal2015, graphdb2015}.
-   
+
 \subsubsection{Flexibility}
 The flexibility of a graph databases must be understood in the context of the graph database model. The model is flexible and so are graph databases. Furthermore, this flexibility is most apparent for an actual operational graph database in production environments.\\
 
@@ -88,10 +88,10 @@ This process is natively supported by graph databases. All components of a graph
 \subsubsection{Agility}
 In today's agile software development world where developers need to focus on a certain task for a short time before switching to a different task, software tools that fit this iterative approach are more favorable. Databases that offer data models which can grow with new data meet this requirement. Additionally, databases that offer data models which do represent the data closer to its actual format (e.g. not transferring it into tables) are also more favorable because they reduce the time between design and implementation which is appropriate for the short time a developer may have to implement a database. Lastly, modern test-driven development requires agile databases to be easily testable. \autocite{maheshlal2015, graphdb2015}. \\
 
-A graph database is “schema-less” \autocite{maheshlal2015}. It does not transform data (e.g. normalization in the SQL world) but rather tries to represent the data as close to its actual format as possible. Furthermore, the application programming interface (API) and query language design of graph database support testability \autocite{graphdb2015} . Finally, the flexibility of its data model enables the database to evolve with new data. As a result, a graph database has the characteristics to be an agile software.   
+A graph database is “schema-less” \autocite{maheshlal2015}. It does not transform data (e.g. normalization in the SQL world) but rather tries to represent the data as close to its actual format as possible. Furthermore, the application programming interface (API) and query language design of graph database support testability \autocite{graphdb2015} . Finally, the flexibility of its data model enables the database to evolve with new data. As a result, a graph database has the characteristics to be an agile software.
 
 \subsection{Fields of Application} \label{section:FoA}
-When reading through use cases described by marketing teams of graph database management system (for example: Neo4j \autocite{neo4j:why_graphdb, neo4j:use_cases} 
+When reading through use cases described by marketing teams of graph database management system (for example: Neo4j \autocite{neo4j:why_graphdb, neo4j:use_cases}
 ), it may feel like any problem could be solved with a graph database. Solving any problem with a graph database may be possible but this fact alone is not a valid reason to do so.\\
 
 Instead, cost efficiently, compliance with company polices, available developer skills and available time are the dominate reasons to choose a graph database for a specific use case. Additionally, replacing existing well-working database management systems should have major and urgently needed advantages \autocite{graphdb2015} .\\
@@ -100,7 +100,7 @@ Graph databases can create these advantages for use cases which handle connected
 
 \subsubsection{Enterprise Use Case Examples}
 \textbf{Social Networks:} Facebook and LinkedIn use graph databases to manage the user information and feed of users. This contains information like updates from friends, news and potential posts of relevance or interest (e.g. Jobs for LinkedIn users) \autocite{maheshlal2015}.\\
- 
+
 \textbf{Routing:} Prominent navigation services like Google Maps, TomTom and Sygic utilize graph databases for map navigation \autocite{maheshlal2015}.\\
 
 \textbf{Search:} Google (Google Knowledge Graph) and Facebook (Facebook Social Graph) are also using graph database which store the connection of content for search functionalities \autocite{maheshlal2015}.\\
@@ -115,7 +115,7 @@ As mentioned before, graph databases are built for storing and rapidly traversin
 
 \scalebox{1}{\textbf{Real-Time Recommendation Engines}} \linebreak
 A real-time recommendation engine can only be as effective as the database it is using because the engine needs information about the existence, quality and strength of data relationships. Information that must either be computed from the database in a time-consuming manner or made available natively, as with graph databases \autocite{neo4j:use_cases}. Graph databases model this information without any additional computation. Existence is modeled by edges (relationships), quality and strength by key-value pairs (properties) of edges.\\
- 
+
 In addition, the need to easily add and combine data (e.g. user behavior, demographics and their purchase history) and then analyze this new dataset in real time for possible recommendations is crucial for such an engine \autocite{neo4j:use_cases}. A graph database support simple addition and combination with its already mentioned flexibility. Furthermore, the performance advantage of graph databases in this context is again very favorable when analyzing this new dataset.\\
 
 \scalebox{1}{\textbf{Master Data Management}} \linebreak
@@ -185,13 +185,34 @@ The following examples have been implemented and tested with the community editi
 Neo4j is available for Windows, Linux and Mac and can be installed via the provided packages. While there is a minimum requirement of 2GB of RAM Neo4j recommends 16GB or more \autocite[Chapter~2.1]{neo4j:op_manual}.
 Since Neo4j ist implemented in Java starting it can be done by invoking it with a Java runtime of choice installed. The default configuration does not need to be modified to get started.
 
-\paragraph{High availability} The community edition of Neo4j does not allow to set up a cluster of multiple Neo4j instances. This feature es reserved for the enterprise version. The setup of a causally consistent cluster is explained in the documentation \autocite[Chapter~5.1]{neo4j:op_manual}. The reference architecture as shown in \autoref{fig:graphdb:causal_cluster} recommends an odd number of at least three \glqq Core Servers\grqq{} connected into a RAFT-Cluster handling mostly write requests. They ensure consistency of the data. Connected to these core cluster may be an arbitrary number of \glqq Read Servers\grqq. They only handle the, sometimes ressource costly, read requests but are not relevant to the clusters integrity. Information from Core Servers is replicated asynchronously to the read replicas.
+\paragraph{High availability} \label{par:graphdb:ha} The community edition of Neo4j does not allow to set up a cluster of multiple Neo4j instances.
+This feature is reserved for the enterprise version.
+The setup of a causally consistent cluster is explained in the documentation \autocite[Chapter~5.1]{neo4j:op_manual}.
+The reference architecture as shown in \autoref{fig:graphdb:causal_cluster} recommends an odd number of at least three \glqq Core Servers\grqq{} connected into a RAFT-Cluster handling mostly write requests.
+They ensure consistency of the data.
+Connected to these core cluster may be an arbitrary number of \glqq Read Servers\grqq.
+They only handle the, sometimes ressource costly, read requests but are not relevant to the clusters integrity.
+Information from Core Servers is replicated asynchronously to the read replicas.
 \begin{figure}[ht]
     \centering
     \includegraphics[width=.5\textwidth]{img/causal_clustering.png}
     \caption{Neo4j causal Cluster Architecture \autocite[Chapter~5.1]{neo4j:op_manual}}
     \label{fig:graphdb:causal_cluster}
 \end{figure}
+
+\paragraph{Classification of Neo4j within the CAP Theorem} For this kind of classification it is again necessary to differentiate between the community and the enterprise edition.
+Since it is not possible to set up a Neo4j-Cluster with the community edition it can not be considered a distributed system.
+Therefore the CAP-Theorem is not applicable \autocite{dzone:understanding_cap}.
+
+As mentioned in \autoref{par:graphdb:ha} the enterprise edition can be set up as a causal cluster.
+Causal consitency though does not fulfill the criteria Brewer put out for consistency \autocite{DBLP:journals/corr/Kleppmann15} so it can not be considered as \glqq C\grqq{} under the CAP Theorem.
+It is important to note that a causal cluster is still ACID compliant.
+Due to the nature of the core servers using a consensus based protocol (RAFT) availability in case of a network partition only applies to the majority of the cluster \autocite{infoq:neo4j}.
+This does make them partition tolerant though fulfilling all criteria for \glqq P\grqq.
+
+According to Michael Hunger, one of the Neo4j developers, the causal cluster architecture can be considered as a \glqq CP\grqq{} system \autocite{infoq:neo4j}.
+Considering the the concerns lined out by Martin Kleppmann in his blog post \autocite{kleppmann:caprant} Neo4j should be considered as \glqq P\grqq{} -- if no alternative to CAP is considered as proposed by him \autocite{DBLP:journals/corr/Kleppmann15}.
+
 
 \subsubsection{Modeling the graph database}
 The sample project maps the relations within users in a social network.
@@ -349,4 +370,3 @@ The second downside is, that many features -- especially regarding maintenance a
 \subsubsection{OrientDB}
 \subsection{conclusion}
 reflect on advantages disadvantages with implementation references
-
