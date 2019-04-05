@@ -165,37 +165,37 @@ Neo4js version 1.1 was released in February 2010. While Neo4j is a for-profit fr
 
 
 \section{Implementing a Graph Database Model}
-This section shall outline the general approach how to convert an existing relational database model into property graph model.
+This section shall outline the general approach, how to convert an existing relational database model into a property graph model.
 In the second part an introdcution to Neo4j, the implementation of a database model in Python and basic querying in an application and with Neo4js own query language \glqq Cypher\grqq{} will follow.
 
 \subsection{Converting a Relational Database Model}
-There are a couple of guides available describing how to build a database model for Neo4j. Since the database itself is schema-less multiple schemas can be used and implemented at the same time.
+There are a couple of guides available describing how to build a database model for Neo4j. Since the database itself is schema-less, multiple schemas can be used and implemented at the same time.
 Nevertheless an application needs a model of the data.
 Neo4j states in \autocite{neo4j:rel_to_graph} that it is possible to transfer almost all existing relational models into a graph model.
 The general approach has been described in \autocite{dzone:rel_to_graph}.
 The first step in this conversion is to consider the names of all Non-JOIN-Tables as labels.
 Foreign keys will become relations.
-JOIN-Tables become relations as well with additional properties added to the relation \autocite{neo4j:graph_vs_rdbms}.
+JOIN-Tables will be converted into relations as well with additional properties added to the relation \autocite{neo4j:graph_vs_rdbms}.
 The rows will be converted into nodes connected by edges based on the formerly converted relations. Attributes not covered in the previous steps will become properties of a node.
 
 \subsection{Implementing a sample project with Neo4j}
-In this section the modeling and setup with Neo4j should be lined out and a sample project be described utilizing available Python-Libraries to implement a sample project.
+In this section the modeling and setup with Neo4j will be lined out and a sample project be described utilizing available Python-Libraries to implement a sample project.
 There are two different available versions of Neo4j.
 First of all there is the Open Source community edition which is published under the GPL.
-Additionally Neo4j Inc sells licences for an enterprise edition \autocite{neo4j:editions} including support and several additional features, such as replication, multiple users, several query perfomance optimization and no limitation for the number of nodes in the database (the community version is limited at 34 Billion nodes).
+Additionally Neo4j Inc sells licences for an enterprise edition \autocite{neo4j:editions} including support and several additional features, such as replication, multiple users, several query perfomance optimizations and no limitation for the number of nodes in the database (the community version is limited at 34 Billion nodes).
 The following examples have been implemented and tested with the community edition.
 
 \subsubsection{Setting up Neo4j}
-Neo4j is available for Windows, Linux and Mac and can be installed via the provided packages. While there is a minimum requirement of 2GB of RAM Neo4j recommends 16GB or more \autocite[Chapter~2.1]{neo4j:op_manual}.
-Since Neo4j ist implemented in Java starting it can be done by invoking it with a Java runtime of choice installed. The default configuration does not need to be modified to get started.
+Neo4j is available for Windows, Linux and Mac and can be installed via the provided packages. While there is a minimum requirement of 2GB of RAM, Neo4j recommends 16GB or more \autocite[Chapter~2.1]{neo4j:op_manual}.
+Since Neo4j is implemented in Java, starting it can be done by invoking it with a Java runtime of choice installed. The default configuration does not need to be modified to get started.
 
 \paragraph{High availability} \label{par:graphdb:ha} The community edition of Neo4j does not allow to set up a cluster of multiple Neo4j instances.
 This feature is reserved for the enterprise version.
 The setup of a causally consistent cluster is explained in the documentation \autocite[Chapter~5.1]{neo4j:op_manual}.
 The reference architecture as shown in \autoref{fig:graphdb:causal_cluster} recommends an odd number of at least three \glqq Core Servers\grqq{} connected into a RAFT-Cluster handling mostly write requests.
 They ensure consistency of the data.
-Connected to these core cluster may be an arbitrary number of \glqq Read Servers\grqq.
-They only handle the, sometimes ressource costly, read requests but are not relevant to the clusters integrity.
+Connected to this core cluster may be an arbitrary number of \glqq Read Servers\grqq.
+They only handle the -- sometimes ressource costly -- read requests but are not relevant to the clusters integrity.
 Information from Core Servers is replicated asynchronously to the read replicas.
 \begin{figure}[ht]
     \centering
@@ -209,10 +209,10 @@ Since it is not possible to set up a Neo4j-Cluster with the community edition it
 Therefore the CAP-Theorem is not applicable \autocite{dzone:understanding_cap}.
 
 As mentioned in \autoref{par:graphdb:ha} the enterprise edition can be set up as a causal cluster.
-Causal consitency though does not fulfill the criteria Brewer put out for consistency \autocite{DBLP:journals/corr/Kleppmann15} so it can not be considered as \glqq C\grqq{} under the CAP Theorem.
+Causal consistency though does not fulfill the criteria Brewer put out for consistency \autocite{DBLP:journals/corr/Kleppmann15} so it can not be considered as \glqq C\grqq{} under the CAP Theorem.
 It is important to note that a causal cluster is still ACID compliant.
-Due to the nature of the core servers using a consensus based protocol (RAFT) availability in case of a network partition only applies to the majority of the cluster \autocite{infoq:neo4j}.
-This does make them partition tolerant though fulfilling all criteria for \glqq P\grqq.
+Due to the nature of the core servers using a consensus-based protocol (RAFT) availability in case of a network partition only applies to the majority of the cluster \autocite{infoq:neo4j}.
+This does make them partition tolerant though, fulfilling all criteria for \glqq P\grqq.
 
 According to Michael Hunger, one of the Neo4j developers, the causal cluster architecture can be considered as a \glqq CP\grqq{} system \autocite{infoq:neo4j}.
 Considering the the concerns lined out by Martin Kleppmann in his blog post \autocite{kleppmann:caprant} Neo4j should be considered as \glqq P\grqq{} -- if no alternative to CAP is considered as proposed by him \autocite{DBLP:journals/corr/Kleppmann15}.
@@ -220,9 +220,11 @@ Considering the the concerns lined out by Martin Kleppmann in his blog post \aut
 
 \subsubsection{Modeling the graph database}
 The sample project maps the relations within users in a social network.
-As it can be seen in \autoref{fig:graphdb:graphmodel} there may be an arbitrary number of Persons (orange) who may be friends with other persons.
-Additionally they can share interests (green) and may be a member of a group (purple).
-Forthermore they can state from which country (yellow) they are from.
+\autoref{fig:graphdb:graphmodel} outlines a data model with circles representing nodes. They are connected by edges showing their relationships.
+For this example labels are represented as colours.
+In this sample model there may be an arbitrary number of persons (orange), who may be friends with other persons.
+Additionally, they can share interests (green) and may be a member of a group (purple).
+Furthermore they can state from which country (yellow) they are from.
 
 \begin{figure}[H]
     \centering
@@ -260,7 +262,7 @@ Forthermore they can state from which country (yellow) they are from.
 \end{figure}
 
 \subsubsection{Implementation in Python}
-While it is possible to manage the database utilizing the CRUD-functionality from Neo4js own query language Cypher (see \ref{sec:graphdb:cypher}) this is not really comfortable in an application.
+While it is possible to manage the database utilizing the CRUD-functionality from Neo4js own query language Cypher (see \ref{sec:graphdb:cypher}) this is not really suitable for an application.
 Developers familiar with Object-Relational-Mappers (ORM) such as Hibernate for Java or SQLAlchemy for Python would prefer to define the different nodes and relations in classes providing the database elements as objects and abstracting actual SQL-Queries.
 
 For Python there exists a community driven project called neomodel \autocite{github:neomodel} aiming to provide an Object-Graph-Mapper (OGM) for Python projects. Neomodel is published under the MIT License.
@@ -296,7 +298,7 @@ For Python there exists a community driven project called neomodel \autocite{git
     \label{lst:graphdb:neomodel}
 \end{listing}
 
-The implementation of the graph model mentioned in \autoref{fig:graphdb:graphmodel} in python has been realized in \autoref{lst:graphdb:neomodel} following the neomodel documentation \autocite{neomodel:rtd}. With this model it is possible to create new nodes in the database by instatiating a new object of the given classes as in \autoref{lst:graphdb:createPerson}.
+The implementation of the graph model mentioned in \autoref{fig:graphdb:graphmodel} in Python has been realized in \autoref{lst:graphdb:neomodel} following the neomodel documentation \autocite{neomodel:rtd}. With this model it is possible to create new nodes in the database by instantiating a new object of the given classes as in \autoref{lst:graphdb:createPerson}.
 \begin{listing}[H]
 \begin{minted}{python}
 lmeitner = Person(name='Lise Meitner', age=89)
@@ -317,7 +319,7 @@ lmeitner.country.connect(country[0])
 \label{lst:graphdb:connectNodes}
 \end{listing}
 
-Retreiving one or more existing nodes can be done by filtering as shown in \autoref{lst:graphdb:queryPerson}.
+Retrieving one or more existing nodes can be done by filtering as shown in \autoref{lst:graphdb:queryPerson}.
 \begin{listing}[H]
 \begin{minted}{python}
 curie = Person.nodes.filter(name='Marie Curie')
@@ -330,23 +332,22 @@ curie = Person.nodes.filter(name='Marie Curie')
 \label{sec:graphdb:cypher}
 Neo4j provides its own query language Cypher. It is developed with an open source specification called openCypher \autocite{openCypher}.
 Thus it should be possible to use the same query language for graph processing in other databases -- such as SAP HANA or Redis.
-Its syntax is oriented on SQL statements though there are quite some differences to better match into a graph model.
+Its syntax is oriented on SQL statements though there are quite some differences to better match with a graph model.
 Neo4j has an extensive introduction how to use Cypher \autocite{neo4j:cypher_introduction}.
 Therefore only a short introduction should be given here.
 
 Cypher uses two basic patterns.
-First of all there are nodes.
-They are denoted by enclosing parentheses.
+First of all there are nodes, denoted by enclosing parentheses.
 The second pattern is used for relationships.
 They are expressed by two dashes and may have a direction utilizing the greater-than/less-than signs.
-Furthermore the type of a relationship may be specified in brackets between the two dashes.
+Furthermore, the type of a relationship may be specified in brackets between the two dashes.
 
 A few examples will make it easier to understand how these patterns can be used.
 
-The most simple query would be to get all nodes and all relations between them withouth regard to their labels.
+The simplest query would be to get all nodes and all relations between them without regard to their labels.
 This can be achieved by calling \mint{SQL}|MATCH (n) RETURN n|
-It is important to note that Cypher uses \texttt{MATCH} as a keyword similar SQLs \texttt{SELECT}.
-Contrary to SQL it is necessary is Cypher to \texttt{RETURN} the previously matched nodes to obtain them in the result.
+It is important to note that Cypher uses \texttt{MATCH} as a keyword similar to SQLs \texttt{SELECT}.
+Contrary to SQL it is necessary in Cypher to \texttt{RETURN} the previously matched nodes to obtain them in the result.
 It is possible to declare the label of a node by calling \mint{SQL}|MATCH (p:Person) RETURN p|
 This would reduce the output to all persons and the relations between them.
 
@@ -354,20 +355,20 @@ As mentioned before Cypher supports a pattern for relations.
 To include them in a query -- e.g. for all Persons who have one or more friends the query would look like \mint{SQL}|MATCH (a:Person) -[:FRIENDS_WITH]- (b:Person) RETURN a, b|
 The relationship type in the brackets may be ommited to get all types of relations between these nodes.
 
-Similar to SQL Cypher also supports a \texttt{WHERE} statement.
+Similar to SQL, Cypher also supports a \texttt{WHERE} statement.
 To query for a specific Person where the attribute \texttt{name} equals \glqq Otto Hahn\grqq{} and all nodes connected to this person the Cypher query would look like this \mint{SQL}|MATCH (p:Person)-[r]-(n) WHERE p.name = 'Otto Hahn' RETURN p, r, n|
 
-Of course Cypher offers a complete keyword set for all types of CRUD operations. Interested readers should follow the fntroduction from Neo4j \autocite{neo4j:cypher_introduction}.
+Of course Cypher offers a complete keyword set for all types of CRUD operations. Interested readers should follow the introduction by Neo4j \autocite{neo4j:cypher_introduction}.
 
 \subsection{Conclusion}
-Getting started with Neo4j is pretty simple.
-There is plenty of dpcumentation available helping to implement a database model and an application based on it.
-Especially the OGM Projects for Python seem pretty advanced and suitable for production usage.
-Users familiar with SQL will find Cypher not that difficult to get used to it.
+Getting started with Neo4j is relatively simple.
+There is plenty of documentation available helping to implement a database model and an application based on it.
+Especially the OGM Projects for Python are pretty advanced and suitable for production usage.
+Users familiar with SQL will find Cypher not that difficult to get used to.
 
-There are two major downsides with Neo4j. The first one is the memory footprint.
+There are two major downsides to Neo4j. The first one is the memory footprint.
 A newly set up instance already consumes more than 600MB of RAM -- in comparison, a PostgreSQL instance storing a couple hundred MB of data still consumes less than half of that.
-The second downside is, that many features -- especially regarding maintenance and clustering are preserved for the enterprise edition and not available in the open source community edition. This makes it difficult if not impossible to use the community edition in a production environment.
+The second downside is, that many features -- especially regarding maintenance and clustering -- are preserved for the enterprise edition and not available in the open source community edition. This makes it difficult if not impossible to use the community edition in a production environment.
 
 \section{Reflection}
 \subsection{alternative popular graphdbs}
