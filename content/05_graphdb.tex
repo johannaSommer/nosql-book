@@ -142,6 +142,7 @@ As the comparison between Graph Databases and Relational Databases is a known fi
 For those comparison points it makes sense to focus on specific implementations of the technologies, hence in this section Neo4j will be chosen as a concrete precedent for Graph Databases, whereas MySQL will be the example implementation for Relational Databases.
 
 \subsubsection{Performance}
+\label{sec:graphdb:performance}
 Detailed surveys on performance of both technologies already exist in literature, for example from Vicknais et al. \autocite{Vicknair2010}. In this specific instance, MySQL version 5.1.42 and Neo4j-b11 were compared.
 The queries chosen for the experiments were similar to types that are used in real world provenance systems. Typically in this scenario, for one dataset/node one traverses the graph to find its origin. Another use case in this context is, if a data object or node is deemed incorrect, this information needs to be propagated to all its descendants/child nodes \autocite{Vicknair2010}.\\
 Further on, the queries were partitioned into structural queries referencing the graph but not the payload itsself, and data queries using the actual payload data. It is important to note that the payload data in this case was integer payload data, as different types are handled seperately depending on framework.\\
@@ -372,5 +373,17 @@ The second downside is, that many features -- especially regarding maintenance a
 \section{Reflection}
 \subsection{alternative popular graphdbs}
 \subsubsection{OrientDB}
+OrientDB is one of the biggest competitors to Neo4j, developed by Callidus Software Inc. (owned by SAP) and published under Apache-2 License \autocite{orientdb:vs_neo4j}.
+Like Neo4j it is implemented in Java.
+OrientDB is a multi model graph database, just as Neo4j, but also a document oriented database allowing relations between documents \autocite{orientdb:why}.
+As a query language OrientDB uses SQL with a custom dialect to include features for traversals \autocite{orientdb:vs_neo4j}.
+In comparison to Neo4j they claim to be a lot faster \autocite{orientdb:vs_neo4j}.
+This claim is based on a paper \autocite{cloudcom:2012}, which has been released in 2012.
+As mentioned in \autoref{sec:graphdb:performance} Neo4j has reimplemented their query engine since then.
+
+
+A major selling point is the possibility to set up a highly-available (multi-master) cluster of multiple nodes with the Open Source community version \autocite{orientdb:cluster, orientdb:support}.
+
+
 \subsection{conclusion}
 reflect on advantages disadvantages with implementation references
