@@ -18,11 +18,11 @@ Another meaningful topic today are recommender systems, where most work focuses 
 
 These application fields bring very distinct workloads that require specific query languages to process. There are two different kinds of workload: in social network transactions low-latency online graphs are processed while for example link analysis algorithms evaluate high-throughput offline graphs \autocite{Angles2018AnIT}. Many query language proposals have come up recently, differing mainly in the underlying graph data structure/model and the functionality provided \autocite{Wood2012QueryLF}.
 
-A deeper description of the theory behind graph databases will be given in subsection 2, aiming to connect the data model to its fields of application as well as comparing it to RDBMS. This comparison will be picked up in subsection 3, where an implementation example will be given, focusing in particular on Neo4j and also explaining how an SQL example would be transformed to fit Graph Databases. Lastly, our findings will be stated in subsection 4 with a general conclusion. \\ 
+A deeper description of the theory behind graph databases will be given in subsection \ref{section2}, aiming to connect the data model to its fields of application as well as comparing it to RDBMS. This comparison will be picked up in subsection \ref{section3}, where an implementation example will be given, focusing in particular on Neo4j and also explaining how an SQL example would be transformed to fit Graph Databases. Lastly, our findings will be stated in subsection \ref{section4} with a general conclusion. \\ 
 Since the topic of Graph Databases contains extensive theory, this chapter of the book will explain the theory and Neo4j in equal parts, to give an easy-to-understand introduction into the topic.
 
 
-\section{Graph Database Theory}
+\section{Graph Database Theory} \label{section2}
 A graph database is a unique type of database designed to store data without transforming it into predefined structural models, and whereby accessing and storing of relationships between data is as important as accessing and storing the data itself \autocite{neo4j:graphdb}. Graph databases offer Create, Read, Update and Delete (CRUD) methods as an online, operational database management system. They focus on operation availability, transactional performance and integrity. Thus, graph databases are usually incorporated into Online-Transaction-Processing (OLTP) systems \autocite{graphdb2015}.
 
 A graph database can be implemented with different concepts (non-native or native) for storage and request processing. Additionally, a data model must be chosen. The most common graph models are property graphs, hypergraphs and triples \autocite{graphdb2015}. For this eBook, the (labeled) property graph model will be examined because it is the most popular model in industry practice \autocite{graphdb2015} and the theoretical foundation of Neo4j \autocite{maheshlal2015}.
@@ -143,11 +143,11 @@ For those comparison points it makes sense to focus on specific implementations 
 It is important to note that literature comparing the two is already rather old and there are no comparisons done on newer versions. There is no new version of mySQL, but two new releases for Neo4j. Those have included a new query engine and performance optimizations. It is hence expected that if such a comparison were to be done again today, the performance results of Neo4j would improve.
 
 \subsubsection{Performance}
-Detailed surveys on performance of both technologies already exist in literature, for example from Vicknais et al. \autocite{Vicknair2010}. In this specific instance, MySQL version 5.1.42 and Neo4j-b11 were compared.
+Detailed surveys on performance of both technologies already exist in literature, for example from Vicknair et al. \autocite{Vicknair2010}. In this specific instance, MySQL version 5.1.42 and Neo4j-b11 were compared.
 The queries chosen for the experiments were similar to types that are used in real world provenance systems. Typically in this scenario, for one node one traverses the graph to find its origin. Another use case in this context is, if a data object or node is deemed incorrect, this information needs to be propagated to all its descendants/child nodes \autocite{Vicknair2010}.\\
 Further on, the queries were partitioned into structural queries referencing the graph but not the payload itself, and data queries using the actual payload data. It is important to note that the payload data in this case was integer payload data, as different types are handled separately depending on the framework.\\
-In the traversal queries, Neo4j clearly outperformed MySQL, sometimes even being faster by the factor of 10. Though that was expected, as Relational Databases are not designed for traversals. MySQL for this part of experiment falls back to a standard Breath First Search, which is not optimal for this scenario. Neo4j on the other hand has a built in framework for traversals, making it superior in terms of performance for the traversal queries \autocite{Vicknair2010}. \\
-Contrary to that, in the data queries MySQL turned out to be more efficient. This result was partly due to the fact that Neo4j uses Lucene for querying, which treats all payload as text, even though in this scenario the payload is of type integer. But also when the payload changes to text, MySQL had better performance in the experiments \autocite{Vicknair2010}. \\
+In the traversal queries, Neo4j clearly outperformed MySQL, sometimes even being faster by the factor of 10. Though that was expected, as Relational Databases are not designed for traversals. MySQL for this part of experiment falls back to a standard Breadth First Search, which is not optimal for this scenario. Neo4j on the other hand has a built in framework for traversals, making it superior in terms of performance for the traversal queries \autocite{Vicknair2010}. \\
+Contrary to that, in the data queries MySQL turned out to be more efficient. This result was partly due to the fact that Neo4j uses Lucene for querying, which treats all payload as text, even though in this scenario the payload is of type integer. But also when the payload changes to text, MySQL had better performance in the experiments \autocite{Vicknair2010}. Lucene has since been dropped and replaced with Cypher in Neo4j version 3.\\
 The researchers also took into account a special case for the experiments, trying the data queries with payload that is closer to actual real world data - text with spaces in between the words. Surprisingly, at a large enough scale Nao4j outperformed MySQL by a large amount for those queries.
 
 \subsubsection{Flexibility}
@@ -157,7 +157,7 @@ MySQL is optimized for a large-scale multi-user environment, hence trying to use
 Neo4j is typically targeted towards more lightweight applications, but manages to scale really well, having a scalable architecture that also accounts for speed \autocite{neo4jweb}. Its easily mutable schema makes it more flexible with data types that are rather untypical for Graph Databases.
 
 \subsubsection{Security}
-Neo4j does not have built in mechanisms for managing security restrictions and multiple users \autocite{GarimaAnalysis}. MySQL on the other hand natively supports multiple users as well as access control lists. \autocite{mysqlsecurity}
+Neo4j does not have built in mechanisms for managing security restrictions and multiple users in their community edition \autocite{GarimaAnalysis}, but the fee-based enterprise edition provides such functionality. MySQL on the other hand natively supports multiple users as well as access control lists. \autocite{mysqlsecurity}
 
 \subsubsection{Maturity}
 For the comparison under the aspect of maturity it makes sense to talk about database implementations in general. Maturity refers both to how old a particular system is and to how thoroughly tested it is \autocite{Vicknair2010}.
@@ -165,7 +165,7 @@ Since all Relational databases - inclusing MySQL - use the same query language S
 Neo4js version 1.1 was released in February 2010. While Neo4j is a for-profit framework and has decent support from its parenty company, this does not apply to all graph database implementations \autocite{Vicknair2010}. Furthermore, the query languages differ from implementation to implementation, separating them in that aspect and making support for one implementation not applicable to another one.
 
 
-\section{Implementing a Graph Database Model}
+\section{Implementing a Graph Database Model} \label{section3}
 This section shall outline the general approach how to convert an existing relational database model into property graph model.
 In the second part an introdcution to Neo4j, the implementation of a database model in Python and basic querying in an application and with Neo4js own query language \glqq Cypher\grqq{} will follow.
 
@@ -370,7 +370,7 @@ There are two major downsides with Neo4j. The first one is the memory footprint.
 A newly set up instance already consumes more than 600MB of RAM -- in comparison, a PostgreSQL instance storing a couple hundred MB of data still consumes less than half of that.
 The second downside is, that many features -- especially regarding maintenance and clustering are preserved for the enterprise edition and not available in the open source community edition. This makes it difficult if not impossible to use the community edition in a production environment.
 
-\section{Reflection}
+\section{Reflection} \label{section4}
 \subsection{alternative popular graphdbs}
 \subsubsection{OrientDB}
 \subsection{Conclusion}
