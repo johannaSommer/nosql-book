@@ -1,4 +1,4 @@
-%!TEX root = ../main.tex 
+%!TEX root = ../main.tex
 
 \chapter{GraphDB}
 \chapterauthor{Thore Krüss, Lennart Purucker, Johanna Sommer}
@@ -11,7 +11,7 @@ After a detailed theoretical presentation of Graph Theory and how it is applied 
 The hype around Graph Databases in todays NOSQL-landscape can not be disregarded. The popularity for Neo4j has been steadily increasing and with its connection-first approach and close to reality data model Neo4j has been gaining fans from all over the database community \autocite{neo4jmark}.
 
 But Graph Database research has its beginnings already in the early 90s. During this time, numerous proposals came up, describing a semantic network to store data about the database. That was, because contemporary systems were failing to consider the semantics of a database.
-The Locial Data Model \autocite{KUPERLDM} was proposed, trying to combine the advantages of relational, hierarchical and network approaches in that they modeled databases as directed graphs, with leaves representing attributes and internal nodes posing as connections between the data. \\
+The Logical Data Model \autocite{KUPERLDM} was proposed, trying to combine the advantages of relational, hierarchical and network approaches in that they modeled databases as directed graphs, with leaves representing attributes and internal nodes posing as connections between the data. \\
 Similar to that, the Functional Data Model \autocite{Shipman1979} was proposed with the same goal, focusing specifically on providing a conceptually natural database interface \autocite{Angles2018AnIT}. \\
 During this period, most of the underlying theory of Graph Databases was created.
 It was most likely because of insufficient hardware support for big graphs that this research declined, only to be picked up again now, powered by improved hardware. Today's focus in Graph Theory research lies primarily on actual practical systems and on the theoretical analysis of graph query languages \autocite{Angles2018AnIT}.
@@ -22,7 +22,7 @@ Another meaningful topic today are recommender systems, where most work focuses 
 
 These application fields bring very distinct workloads that require specific query languages to process. There are two different kinds of workload: in social network transactions low-latency online graphs are processed while for example link analysis algorithms evaluate high-throughput offline graphs \autocite{Angles2018AnIT}. Many query language proposals have come up recently, differing mainly in the underlying graph data structure/model and the functionality provided \autocite{Wood2012QueryLF}.
 
-A deeper description of the theory behind graph databases will be given in subsection \ref{section2}, aiming to connect the data model to its fields of application as well as comparing it to RDBMS. This comparison will be picked up in subsection \ref{section3}, where an implementation example will be given, focusing in particular on Neo4j and also explaining how an SQL example would be transformed to fit Graph Databases. Lastly, our findings will be stated in subsection \ref{section4} with a general conclusion. \\ 
+A deeper description of the theory behind graph databases will be given in subsection \ref{section2}, aiming to connect the data model to its fields of application as well as comparing it to RDBMS. This comparison will be picked up in subsection \ref{section3}, where an implementation example will be given, focusing in particular on Neo4j and also explaining how an SQL example would be transformed to fit Graph Databases. Lastly, our findings will be stated in subsection \ref{section4} with a general conclusion. \\
 Since the topic of Graph Databases contains extensive theory, this chapter of the book will explain the theory and Neo4j in equal parts, to give an easy-to-understand introduction into the topic.
 
 
@@ -120,7 +120,7 @@ Graph databases can create these advantages for use cases which handle connected
 \subsubsection{Neo4j Use Cases}
 \scalebox{1}{\textbf{Fraud Detection}}
 
-Graph databases are well fit for fraud detection because good detection mechanisms need to analyze the relationships between data. In detail, if the relationships between certain data ojbects is conspicuously high, the risk of fraud is very high.  As an example, take an E-commerce system. A normal user would use one or two credit cards to buy products. A fraudster would use a lot of different credit cards which are most likely stolen. This relationship density between users, credit cards and purchased products is modeled by a graph database and is therefore easily measurable and observable \autocite{neo4j:use_cases}.
+Graph databases are well fit for fraud detection because good detection mechanisms need to analyze the relationships between data. In detail, if the relationships between certain data objects is conspicuously high, the risk of fraud is very high.  As an example, take an E-commerce system. A normal user would use one or two credit cards to buy products. A fraudster would use a lot of different credit cards which are most likely stolen. This relationship density between users, credit cards and purchased products is modeled by a graph database and is therefore easily measurable and observable \autocite{neo4j:use_cases}.
 
 As mentioned before, graph databases are built for storing and rapidly traversing relationships, thereby supporting advanced detection mechanisms that need to perform relationship analysis between a lot of data.
 
@@ -138,7 +138,7 @@ In a company, master data is data such as users, customers, products, accounts, 
 
 The structural representation of an information technology (IT) infrastructure network is a graph. Consequently, it should not be a surprise that a graph database is a good solution to model, store and serve requests for an IT infrastructure environment. Information in an IT infrastructure environment are for example device configurations, infrastructure interdependencies, any kind of event (log files, error messages, etc.) and administrative details. Systems that use such information can, in the event of a failure, inform the right administrator about what went wrong where and when in real time \autocite{neo4j:use_cases}.
 
-A graph database is not only able to model the network in its native representation but is also able to add all this information to its storage with ease. Network administrators are nodes with connection to their devices and field of responsibility (subgraphs). Configurations are properties of device nodes. Any interdependencies are represented by relationships. Lastly, events are nodes linked to the device that created it. This requirement for a native data model and sufficent performance is fulfilled by a graph database.
+A graph database is not only able to model the network in its native representation but is also able to add all this information to its storage with ease. Network administrators are nodes with connection to their devices and field of responsibility (subgraphs). Configurations are properties of device nodes. Any interdependencies are represented by relationships. Lastly, events are nodes linked to the device that created it. This requirement for a native data model and sufficient performance is fulfilled by a graph database.
 
 \scalebox{1}{\textbf{Identity and Access Management}}
 
@@ -169,12 +169,12 @@ Neo4j does not have built in mechanisms for managing security restrictions and m
 
 \subsubsection{Maturity}
 For the comparison under the aspect of maturity it makes sense to talk about database implementations in general. Maturity refers both to how old a particular system is and to how thoroughly tested it is \autocite{Vicknair2010}.
-Since all Relational databases - inclusing MySQL - use the same query language SQL, support is equal over all implementations and support for one implementation is applicable to all others \autocite{GarimaAnalysis}.
-Neo4js version 1.1 was released in February 2010. While Neo4j is a for-profit framework and has decent support from its parenty company, this does not apply to all graph database implementations \autocite{Vicknair2010}. Furthermore, the query languages differ from implementation to implementation, separating them in that aspect and making support for one implementation not applicable to another one.
+Since all Relational databases - including MySQL - use the same query language SQL, support is equal over all implementations and support for one implementation is applicable to all others \autocite{GarimaAnalysis}.
+Neo4js version 1.1 was released in February 2010. While Neo4j is a for-profit framework and has decent support from its parent company, this does not apply to all graph database implementations \autocite{Vicknair2010}. Furthermore, the query languages differ from implementation to implementation, separating them in that aspect and making support for one implementation not applicable to another one.
 
 \section{Implementing a Graph Database Model} \label{section3}
 This section shall outline the general approach, how to convert an existing relational database model into a property graph model.
-In the second part an introdcution to Neo4j, the implementation of a database model in Python and basic querying in an application and with Neo4js own query language \glqq Cypher\grqq{} will follow.
+In the second part an introduction to Neo4j, the implementation of a database model in Python and basic querying in an application and with Neo4js own query language \glqq Cypher\grqq{} will follow.
 
 \subsection{Converting a Relational Database Model}
 There are a couple of guides available describing how to build a database model for Neo4j. Since the database itself is schema-less, multiple schemas can be used and implemented at the same time.
@@ -190,7 +190,7 @@ The rows will be converted into nodes connected by edges based on the formerly c
 In this section the modeling and setup with Neo4j will be lined out and a sample project be described utilizing available Python-Libraries to implement a sample project.
 There are two different available versions of Neo4j.
 First of all there is the Open Source community edition which is published under the GPL.
-Additionally Neo4j Inc sells licences for an enterprise edition \autocite{neo4j:editions} including support and several additional features, such as replication, multiple users, several query perfomance optimizations and no limitation for the number of nodes in the database (the community version is limited at 34 Billion nodes).
+Additionally Neo4j Inc sells licenses for an enterprise edition \autocite{neo4j:editions} including support and several additional features, such as replication, multiple users, several query performance optimizations and no limitation for the number of nodes in the database (the community version is limited at 34 Billion nodes).
 The following examples have been implemented and tested with the community edition.
 
 \subsubsection{Setting up Neo4j}
@@ -203,7 +203,7 @@ The setup of a causally consistent cluster is explained in the documentation \au
 The reference architecture as shown in \autoref{fig:graphdb:causal_cluster} recommends an odd number of at least three \glqq Core Servers\grqq{} connected into a RAFT-Cluster handling mostly write requests.
 They ensure consistency of the data.
 Connected to this core cluster may be an arbitrary number of \glqq Read Servers\grqq.
-They only handle the -- sometimes ressource costly -- read requests but are not relevant to the clusters integrity.
+They only handle the -- sometimes resource costly -- read requests but are not relevant to the clusters integrity.
 Information from Core Servers is replicated asynchronously to the read replicas.
 \begin{figure}[ht]
     \centering
@@ -379,7 +379,7 @@ A newly set up instance already consumes more than 600MB of RAM -- in comparison
 The second downside is, that many features -- especially regarding maintenance and clustering -- are preserved for the enterprise edition and not available in the open source community edition. This makes it difficult if not impossible to use the community edition in a production environment.
 
 \section{Reflection} \label{section4}
-\subsection{alternative popular graphdbs}
+\subsection{Alternative popular Graph Databases}
 \subsubsection{OrientDB}
 OrientDB is one of the biggest competitors to Neo4j, developed by Callidus Software Inc. (owned by SAP) and published under Apache-2 License \autocite{orientdb:vs_neo4j}.
 Like Neo4j it is implemented in Java.
@@ -393,10 +393,9 @@ As mentioned in \autoref{sec:graphdb:performance} Neo4j has reimplemented their 
 A major selling point is the possibility to set up a highly-available (multi-master) cluster of multiple nodes with the Open Source community version \autocite{orientdb:cluster, orientdb:support}.
 
 \subsection{Conclusion}
-Even though there is extensive literature on the topic of Graph Databases, our group was overall dissatisfied with the scienfitic resources we found. Most publications were written by the same few people, not providing a distinct enough reflection on the topic. Furthermore, while there were many publications around 2010 on this topic, literature did not provide updates or added benchmarks of e.g. comparisons with other database systems. We aim to close that gap with an updated summary on today's Graph Database theory and Neo4j. \\
+Even though there is extensive literature on the topic of Graph Databases, our group was overall dissatisfied with the scientific resources we found. Most publications were written by the same few people, not providing a distinct enough reflection on the topic. Furthermore, while there were many publications around 2010 on this topic, literature did not provide updates or added benchmarks of e.g. comparisons with other database systems. We aim to close that gap with an updated summary on today's Graph Database theory and Neo4j. \\
 In this chapter, we first gave an introduction into Graph Databases, providing an overview of its history. Next, the basic underlying theory was explained and assessed critically. A report on the implementation with Neo4j was given, stating its distinct characteristics and concluding its value as a Graph Database implementation.
 
-To conclude, we would also like to share our personal experience of working with Neo4j and Graph Databases in general. Overall, we feel that with the concept of Graphs as a database model one can easier map real life datastructures than with just a relatioinal structure. While the underlying theory is rather complex, we felt that there were sufficient resources to give a simple introduction into the topic. The implementation was enjoyable, as the documentation for Neo4j was easily understandable and it did not take long until the basic setup was complete. We especially enjoyed using community driven libraries; when issues arrose we were given an answer and help immediately, making our experience overall very pleasant.  
+To conclude, we would also like to share our personal experience of working with Neo4j and Graph Databases in general. Overall, we feel that with the concept of Graphs as a database model one can easier map real life datastructures than with just a relational structure. While the underlying theory is rather complex, we felt that there were sufficient resources to give a simple introduction into the topic. The implementation was enjoyable, as the documentation for Neo4j was easily understandable and it did not take long until the basic setup was complete. We especially enjoyed using community driven libraries; when issues arose we were given an answer and help immediately, making our experience overall very pleasant.
 
-Future work to extend this paper could include assessing the enterprise edition. We were unable to compare the community edition to the enterprise edition due to stellar pricing. The fee-based version allows for clustering which would have been interesting to take into account for our implementation. In addition, a deeper evaluation of alternatives like OrientDB could be valuable, especially since OrientDB is an open source project and provides clustering functionality in its community version. Lastly, Hypergraph and Triplet propose interesting approaches to graph modeling and an assesment of the differences and strenghts would be valuable for the current literature landscape.
-
+Future work to extend this paper could include assessing the enterprise edition. We were unable to compare the community edition to the enterprise edition due to stellar pricing. The fee-based version allows for clustering which would have been interesting to take into account for our implementation. In addition, a deeper evaluation of alternatives like OrientDB could be valuable, especially since OrientDB is an open source project and provides clustering functionality in its community version. Lastly, Hypergraph and Triplet propose interesting approaches to graph modeling and an assessment of the differences and strengths would be valuable for the current literature landscape.
