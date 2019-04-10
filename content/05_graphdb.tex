@@ -1,13 +1,14 @@
 %!TEX root = ../main.tex
 
-\chapter{GraphDB}
+\chapter{Graph Databases -- Neo4j}
 \chapterauthor{Thore Krüss, Lennart Purucker, Johanna Sommer}
 \section{Abstract}
-This chapter of the book gives an overview of Graph Databases as part of the NoSQL landscape, focusing on Neo4j as a specific implementation. The goal of this work is to give a timely overview of Graph Databases today as well as assessing recent events and additions to this technology. The reader will be given a comprehensive introduction to the field and can find suggestions on how Graph Databases can help easier model data structures and in which scenarios it is superior to relational database models. \\
+This chapter of the book gives an overview of Graph Databases as part of the NoSQL landscape, focusing on Neo4j as a specific implementation. The goal of this work is to give a timely overview of Graph Databases today as well as assessing recent events and additions to this technology. The reader will be given a comprehensive introduction to the field and can find suggestions on how Graph Databases can help easier model data structures and in which scenarios it is superior to relational database models.
+
 After a detailed theoretical presentation of Graph Theory and how it is applied to Graph Databases, a comparison to RDBMS as well as the prevalent advantages of Graph Databases are given. Next, Graph Databases in practice are shown by the example of Neo4j, giving a comprehensive overview about setup and characteristics specific to this implementation. After a summarizing conclusion about Neo4j, an overall reflection of Graph Databases including personal experience and possible future work closes this chapter.
 
 
-\section{Motivation/Introduction}
+\section{Introduction}
 The hype around Graph Databases in todays NOSQL-landscape can not be disregarded. The popularity for Neo4j has been steadily increasing and with its connection-first approach and close to reality data model Neo4j has been gaining fans from all over the database community \autocite{neo4jmark}.
 
 But Graph Database research has its beginnings already in the early 90s. During this time, numerous proposals came up, describing a semantic network to store data about the database. That was, because contemporary systems were failing to consider the semantics of a database.
@@ -34,7 +35,7 @@ A graph database is a unique type of database designed to store data without tra
 A graph database can be implemented with different concepts, non-native or native, for storage and request processing. Additionally, a data model must be chosen. The most common graph models are property graphs, hypergraphs and triples \autocite{graphdb2015}. For this eBook, the (labeled) property graph model will be examined because it is the most popular model in industry practice \autocite{graphdb2015} and the theoretical foundation of Neo4j \autocite{maheshlal2015}.
 
 
-\subsection{Description of data model and functionality}
+\subsection{Description of Data Model and Functionality}
 Before the explanation of the property graph model, a short recap of graphs is needed. There is no need for general graph theory, like search algorithms, to understand graph databases \autocite{graphdb2015}.
 
 \subsubsection{Graph Basics}
@@ -186,7 +187,7 @@ Foreign keys will become relations.
 JOIN-Tables will be converted into relations as well with additional properties added to the relation \autocite{neo4j:graph_vs_rdbms}.
 The rows will be converted into nodes connected by edges based on the formerly converted relations. Attributes not covered in the previous steps will become properties of a node.
 
-\subsection{Implementing a sample project with Neo4j}
+\subsection{Implementing a Sample Project with Neo4j}
 In this section the modeling and setup with Neo4j will be lined out and a sample project be described utilizing available Python-Libraries to implement a sample project.
 There are two different available versions of Neo4j.
 First of all there is the Open Source community edition which is published under the GPL.
@@ -379,7 +380,7 @@ A newly set up instance already consumes more than 600MB of RAM -- in comparison
 The second downside is, that many features -- especially regarding maintenance and clustering -- are preserved for the enterprise edition and not available in the open source community edition. This makes it difficult if not impossible to use the community edition in a production environment.
 
 \section{Reflection} \label{section4}
-\subsection{Alternative popular Graph Databases}
+\subsection{Alternative Graph Databases}
 \subsubsection{OrientDB}
 OrientDB is one of the biggest competitors to Neo4j, developed by Callidus Software Inc. (owned by SAP) and published under Apache-2 License \autocite{orientdb:vs_neo4j}.
 Like Neo4j it is implemented in Java.
