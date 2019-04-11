@@ -24,6 +24,7 @@ let
       logreq
       xstring
       minted
+      fvextra
       ;
   };
 
@@ -60,6 +61,7 @@ in
 
     buildInputs = [
       latexPackage pplatex
+      python3Packages.pygments
     ];
 
     configurePhase = ''
