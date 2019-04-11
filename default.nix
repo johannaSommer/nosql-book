@@ -15,7 +15,6 @@ let
       enumitem
       bigfoot
       slantsc
-      scrhack
 
       # Bibliography
       biber
