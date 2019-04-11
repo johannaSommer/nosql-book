@@ -15,6 +15,7 @@ let
       enumitem
       bigfoot
       slantsc
+      scrhack
 
       # Bibliography
       biber
@@ -64,6 +65,7 @@ in
     buildInputs = [
       latexPackage pplatex
       python3Packages.pygments
+      which
     ];
 
     configurePhase = ''
