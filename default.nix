@@ -25,6 +25,7 @@ let
       xstring
       minted
       fvextra
+      ifplatform
       ;
   };
 
