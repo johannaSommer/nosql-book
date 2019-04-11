@@ -15,6 +15,11 @@ let
       enumitem
       bigfoot
       slantsc
+      xpatch
+      minted
+      fvextra
+      ifplatform
+      framed
 
       # Bibliography
       biber
@@ -23,10 +28,6 @@ let
       csquotes
       logreq
       xstring
-      minted
-      fvextra
-      ifplatform
-      framed
       ;
   };
 
